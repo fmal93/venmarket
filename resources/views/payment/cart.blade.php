@@ -80,8 +80,10 @@
             </div>
         </div>
     @else
-        <div class="w-full lg:w-3/5 m-auto mt-5 bg-red-500 text-white rounded-md shadow text-center mt-1">
-            Carro Vacio
+        <div style="height: 500px;">
+            <div class="w-full lg:w-3/5 m-auto mt-5 bg-red-500 text-white rounded-md shadow text-center mt-1">
+                Carro Vacio
+            </div>
         </div>
     @endif
 @endsection

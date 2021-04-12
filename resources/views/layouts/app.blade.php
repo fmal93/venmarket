@@ -19,7 +19,5 @@
         </div>
         <script src="{{ asset('js/app.js') }}"></script>
     </body>
-
-    <footer class="bg-yellow-400 w-full">
-    </footer>
+    <x-footer-component/>
 </html>

@@ -39,7 +39,11 @@ class CartController extends Controller
     {
         $product = Product::find($id);
         $oldCart = Session::has('cart') ? Session::get('cart') : null;
+        if($oldCart == null){
+            return redirect('/carrito');
+        }
         $cart = new Cart($oldCart);
+        
         if ($cart->items && array_key_exists($id, $cart->items)){
             $cart->removeItem($id);
         }

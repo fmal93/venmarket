@@ -34,7 +34,7 @@ const swiper1 = new Swiper('.swiper-1', {
 });
 
 const swiper2 = new Swiper('.swiper-2', {
-  slidesPerView: 3,
+  slidesPerView: 2,
   spaceBetween: 0,
   freeMode: true,
   lazy: true,
@@ -52,7 +52,7 @@ const swiper2 = new Swiper('.swiper-2', {
       spaceBetween: 10,
     },
     768: {
-      slidesPerView: 4,
+      slidesPerView: 5,
       spaceBetween: 40,
     },
   }

@@ -10,6 +10,7 @@ class HomeController extends Controller
     public function Index()
     {
         $products = Product::has('productValue')->get();
-        return view('home', ['products' => $products]);
+        $recommended = Product::Where('recommended', '=', true)->get();
+        return view('home', ['products' => $products, 'recommended' => $recommended]);
     }
 }

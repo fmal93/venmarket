@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\Category;
 
 class ShopController extends Controller
 {
@@ -50,15 +51,10 @@ class ShopController extends Controller
         return view('product.detail', ['product' => $product]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function showByCat($id)
     {
-        //
+        $category = Category::findOrFail($id);
+        return view('product.bycategory', ['category' => $category]);
     }
 
     /**

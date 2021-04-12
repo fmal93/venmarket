@@ -8,7 +8,20 @@
             
                 <ul class="px-5 lg:flex lg:justify-between">
                     <li class="tracking-wider hover:text-yellow-300"><a href="/"><em>Inicio</em></a></li>
-                    <li class="tracking-wider hover:text-yellow-300"><a href="/product"><em>Productos</em></a></li>
+                    <li class="tracking-wider lg:relative" @mouseenter="isOpenPro = true" @mouseleave="isOpenPro = false">
+                        <div class="cursor-pointer hover:text-yellow-300 w-full" @touchstart="isOpenPro = !isOpenPro"><em>Productos</em></div>
+                        <div class="flex justify-center py-3 lg:absolute lg:bg-white rounded border-t-2 lg:border-2 border-gray-300" v-show="isOpenPro == true">
+                            <ul class="w-4/5 lg:w-full lg:px-10 lg:pb-5">
+                                <li class="w-full hover:text-yellow-300 py-1 lg:py-2" v-for="category in categories" v-bind:key="category.id">
+                                    <a v-bind:href="'/product/categoria/'+ category.id"><em>{{ category.name }}</em></a>
+                                </li>
+                                <hr>
+                                <li class="w-full hover:text-yellow-300 py-1 lg:py-2">
+                                    <a href="/product"><em>Ver todo</em></a>
+                                </li>
+                            </ul>
+                       </div>
+                    </li>
                     <li class="tracking-wider hover:text-yellow-300"><a href="/carrito"><em>Carrito</em></a></li>
                     <li class="tracking-wider hover:text-yellow-300"><a href="#"><em>Contactanos</em></a></li>
                 </ul>
@@ -43,12 +56,15 @@
 export default {
     data() {
         return {
+            isOpenPro: false,
             isOpen: screen.width < 1000 ? false:true,
+            categories: [],
         }
     },
     props: ['badge'],
     mounted(){
-        window.addEventListener('resize', this.onResize)
+        window.addEventListener('resize', this.onResize);
+        this.loadCategories();
     },
 
     beforeDestroy() {
@@ -64,7 +80,18 @@ export default {
         onResize(event) {
             if (screen.width > 1000) return this.isOpen = true;
             this.isOpen = false;     
-        }
+        },
+        loadCategories: function () {
+            axios.get('/api/categories', {
+                params: _.omit(this.selected, 'categories')
+            })
+            .then((response) => {
+                this.categories = response.data.data;
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        },
     },
 
     watch: {

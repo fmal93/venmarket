@@ -6,7 +6,7 @@
     <div class="w-full py-3 flex flex-wrap h-full text-black font-bold">
         @foreach ($products as $product)
             <div class="w-1/2 md:w-1/5 hover:shadow-2xl py-2 rounde-md bg-white">
-                <div class="w-4/5 mx-auto flex h-36 lg:h-56 hidden">
+                <div class="w-4/5 mx-auto flex h-36 lg:h-56">
                     <a href="product/{{ $product->slug}}">
                         <img src="/storage/{{ $product->productImage->img_url}}" class="w-full" alt="{{ $product->name }}">
                     </a>

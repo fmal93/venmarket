@@ -22,6 +22,7 @@ Route::get('/', [HomeController::class, 'index']);
 
 Route::get('/product', [ShopController::class, 'index']);
 Route::get('/product/{slug}', [ShopController::class, 'show']);
+Route::get('/product/categoria/{id}', [ShopController::class, 'showByCat']);
 
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();

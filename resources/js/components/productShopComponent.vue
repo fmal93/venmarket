@@ -1,7 +1,7 @@
 <template>
     <div class="lg:mx-5">
         <div class="w-full block lg:flex lg:justify-around pt-3 lg:pt-6 px-3">
-            <div class="w-full lg:w-1/4 relative" @mouseleave="cat_dropdown = false">
+            <div class="w-full lg:w-1/4 relative" @mouseleave="cat_dropdown = false" v-show="showCatTabProp == true">
                 <div class="flex z-0 justify-between w-full bg-yellow-400 text-black font-bold text-center mb-1 items-center rounded-lg py-1 cursor-pointer hover:text-gray-200" @touchstart="cat_dropdown = !cat_dropdown" @mouseenter="cat_dropdown = true">
                     <p class="ml-5">Categorias</p>
                     <svg class="w-4 h-4 mr-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -32,8 +32,8 @@
                     <div class="w-4/5 m-auto">
                         <ul class="p-2 w-full"> 
                             <li v-for="(brand, index) in brands" v-bind:key="brand.id">
-                                <input type="checkbox" :value="brand.id" :id="'brand-'+ index" v-model="selected.brands">
-                                <label :for="'brand-'+ index">
+                                <input type="checkbox" :value="brand.id" :id="'brand-'+ index" v-model="selected.brands" v-show="brand.products_count > 0">
+                                <label :for="'brand-'+ index" v-show="brand.products_count > 0">
                                     <span class="text-md lg:text-lg px-3">{{ brand.name }} ({{ brand.products_count }})</span>
                                 </label>
                             </li>
@@ -52,8 +52,8 @@
                     <div class="w-4/5 m-auto">
                         <ul class="p-2 w-full">
                             <li v-for="(type, index) in types" v-bind:key="type.id">
-                                <input type="checkbox" :value="type.id" :id="'type'+index" v-model="selected.subcategories">
-                                <label :for="'type'+index">
+                                <input type="checkbox" :value="type.id" :id="'type'+index" v-model="selected.subcategories" v-show="type.products_count > 0">
+                                <label :for="'type'+index" v-show="type.products_count > 0">
                                     <span class="text-md lg:text-lg px-3">{{ type.name }} ({{ type.products_count }})</span>
                                 </label>
                             </li>
@@ -66,7 +66,7 @@
         <div class="w-full py-3 flex flex-wrap h-full text-black font-bold">
             <div class="w-1/2 md:w-1/5 hover:shadow-2xl py-2 rounde-md bg-white" v-for="product in products" v-bind:key="product.id">
                 <div class="w-4/5 mx-auto flex h-36 lg:h-56">
-                    <a :href="'product/' + product.slug">
+                    <a :href="'/product/' + product.slug">
                         <img :src="'/storage/' + product.img_url" class="w-full" :alt="product.name">
                     </a>
                 </div>
@@ -110,7 +110,7 @@
                 types: [],
                 products: [],
                 selected: {
-                    categories: [],
+                    categories: this.catIds,
                     subcategories: [],
                     brands: []                    
                 },
@@ -120,7 +120,8 @@
             }
         },
         props: {
-
+            showCatTabProp: Boolean,
+            catIds: Array,
         },
         methods: {
             loadCategories: function () {
@@ -143,7 +144,6 @@
                     this.pagination = response.data.meta;
                     this.links = response.data.links;
                     this.loading = false;
-                    console.log(this.links);
                 })
                 .catch(function (error) {
                     console.log(error);
