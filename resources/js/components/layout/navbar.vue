@@ -6,9 +6,9 @@
         <transition name="fade">
             <div class="order-4 lg:order-2 w-full lg:w-2/5 pb-3" v-show="isOpen == true">
             
-                <ul class="px-5 lg:flex lg:justify-between">
-                    <li class="tracking-wider hover:text-yellow-300"><a href="/"><em>Inicio</em></a></li>
-                    <li class="tracking-wider lg:relative" @mouseenter="isOpenPro = true" @mouseleave="isOpenPro = false">
+                <ul class="px-5 lg:flex lg:justify-around">
+                    <li class="tracking-wider hover:text-yellow-300 hover:undeline"><a href="/"><em>Inicio</em></a></li>
+                    <li class="tracking-wider lg:relative hover:undeline" @mouseenter="isOpenPro = true" @mouseleave="isOpenPro = false">
                         <div class="cursor-pointer hover:text-yellow-300 w-full" @touchstart="isOpenPro = !isOpenPro"><em>Productos</em></div>
                         <div class="flex justify-center py-3 lg:absolute lg:bg-white rounded border-t-2 lg:border-2 border-gray-300" v-show="isOpenPro == true">
                             <ul class="w-4/5 lg:w-full lg:px-10 lg:pb-5">
@@ -22,8 +22,7 @@
                             </ul>
                        </div>
                     </li>
-                    <li class="tracking-wider hover:text-yellow-300"><a href="/carrito"><em>Carrito</em></a></li>
-                    <li class="tracking-wider hover:text-yellow-300"><a href="#"><em>Contactanos</em></a></li>
+                    <li class="tracking-wider hover:text-yellow-300 hover:undeline"><a href="/carrito"><em>Carrito</em></a></li>
                 </ul>
             </div>
         </transition>

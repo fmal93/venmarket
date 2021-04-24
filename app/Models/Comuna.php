@@ -5,13 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ProductStock extends Model
+class Comuna extends Model
 {
     use HasFactory;
+
     protected $guarded = [];
 
-    public function productValue()
+    public function Region() 
     {
-        return $this->belongsTo(ProductValue::class);
+        return $this->belongsTo(Region::class);
     }
 }

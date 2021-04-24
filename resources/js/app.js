@@ -9,6 +9,8 @@ window.Vue = require('vue').default;
 Vue.component('layout-navbar', require('./components/layout/navbar.vue').default)
 Vue.component('img-slider', require('./components/imageSlider.vue').default)
 Vue.component('shop-index', require('./components/productShopComponent.vue').default)
+Vue.component('select-comuna', require('./components/selectComuna.vue').default)
+
 
 const app = new Vue({
     el: '#app'
@@ -57,4 +59,15 @@ const swiper2 = new Swiper('.swiper-2', {
     },
   }
 });
+
+const form = document.getElementById('pay-form');
+const formBtn = document.getElementById('submit-payment');
+if (form) {
+  form.addEventListener('submit', logSubmit);
+
+  function logSubmit(event) {
+    formBtn.setAttribute("disable", "disabled");
+    formBtn.setAttribute("class", "block m-auto my-10 py-2 w-3/5 lg:w-2/6 rounded-md shadow-md font-bold bg-yellow-400 opacity-50 cursor-default"); 
+  }
+}
 

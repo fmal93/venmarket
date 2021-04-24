@@ -8,7 +8,13 @@ use Transbank\Webpay\WebpayPlus\Transaction;
 use Illuminate\Support\Facades\Session;
 use App\Models\Cart;
 use App\Models\Preorder;
+use App\Models\Comuna;
+use App\Models\Order;
+use App\Models\ProductStock;
 use App\Models\Product;
+use App\Models\WebpayToken;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\orderPlaced;
 
 class CheckoutController extends Controller
 {
@@ -25,13 +31,13 @@ class CheckoutController extends Controller
 
     public function initTransaction(Request $request)
     {
-        $validatedData = $request->validate([
+        $request->validate([
             'c_nombre' => 'required|max:255',
-            'c_telefono' => 'regex:/^[\+0-9\-\(\)\s]*$/',
-            'c_email' => 'email',
+            'c_telefono' => 'required|regex:/^[\+0-9\-\(\)\s]*$/||min:9',
+            'c_email' => 'required|email:rfc,dns',
             'c_direccion' => 'required',
-            // 'c_region' => 'required',
-            // 'c_comuna' => 'required',
+            'c_region' => 'required',
+            'c_comuna' => 'required',
         ]);
         if (!Session::has('cart')) {
             return view('payment.cart');
@@ -66,62 +72,84 @@ class CheckoutController extends Controller
 
     public function confirmTransaction(Request $request)
     {
-        
         if ($request->TBK_TOKEN) {
-            $token_anulacion = $request->TBK_TOKEN;
-            $preOrder_anulacion = Preorder::where('tokenWS', $token_anulacion)->firstOrFail();
-            $items_in_cart = unserialize($preOrder_anulacion->cart);
-            foreach ($items_in_cart as $item){
-                $oldCart = Session::has('cart') ? Session::get('cart') : null;
-                $cart = new Cart($oldCart);
-                $product = Product::find($item['item']['id']);
-                $cart->restoreCart($item['item'], $item['item']['id'], $item['qty']);
-                Session::put('cart', $cart);
-            }
-            $delete_preorder = Preorder::find($preOrder_anulacion->id);
-            $delete_preorder->delete();
+            $token_anulacion = $request->TBK_TOKEN;            
+            $this->restoreCart($token_anulacion);            
             $oldCart = Session::has('cart') ? Session::get('cart') : null;
             $cart = new Cart($oldCart);
-            return view('payment.cart', ['products' => $cart->items, 'totalPrice' => $cart->totalPrice]);
+            return redirect('/carrito');
+        }else{
+            $token = $request->token_ws;
+            $response = Transaction::commit($token);
+
+            if ($response->getResponseCode() == 0) {
+                $this->CreateWebpayToken($response, $token); 
+                $preOrder = Preorder::where('tokenWS', $token)->firstOrFail();
+                $tems_cart = unserialize($preOrder->cart);
+                $item_names = [];
+                $items_qty = [];
+                foreach ($tems_cart as $item) {
+                    array_push($item_names, $item['item']['name']);
+                    array_push($items_qty, $item['qty']);
+                    $stock = $item['item']['productValue']['productStock']['stock'] - $item['qty'];
+                    ProductStock::findOrFail($item['item']['productValue']['productStock']['id'])->update(['stock' => $stock]);     
+                }
+                $items_names_implode = implode(",", $item_names);
+                $items_qty_implode = implode(",",$items_qty);  
+                $unser_datos = unserialize($preOrder->datos); 
+                $this->CreateOrder($response, $unser_datos, $items_qty_implode, $items_names_implode);
+                Mail::send(new OrderPlaced($tems_cart, $unser_datos, $response->getBuyOrder()));
+                Mail::to($unser_datos['c_email'])->send(new OrderPlaced($tems_cart, $unser_datos, $response->getBuyOrder()));
+                $preOrder->delete();
+                return view('payment.checkout-return',  ['status' => 'Orden completa', 'response' => $response]);
+            }
+
+            $this->CreateWebpayToken($response, $token);
+            $this->restoreCart($token);  
+            return view('payment.checkout-return')->with('status', 'Ha ocurrido un error');
         }
-        $token= $request->token_ws;
-        $response = Transaction::commit($token);
-
-        $response->getVci();
-        $response->getAmount();
-        $response->getStatus();
-        $response->getBuyOrder();
-        $response->getSessionId();
-        $response->getCardDetail();
-        $response->getAccountingDate();
-        $response->getTransactionDate();
-        $response->getAuthorizationCode();
-        $response->getPaymentTypeCode();
-        $response->getResponseCode();
-        $response->getInstallmentsAmount();
-        $response->getInstallmentsNumber();
-        $response->getBalance();
-
-        return view('payment.checkout-return', ['response' => $response]);
     }
 
-    public function  transactionStatus()
+    public function restoreCart($token)
     {
-        $response = Transaction::getStatus($token); 
-        
-        $response->getVci();
-        $response->getAmount();
-        $response->getStatus();
-        $response->getBuyOrder();
-        $response->getSessionId();
-        $response->getCardDetail();
-        $response->getAccountingDate();
-        $response->getTransactionDate();
-        $response->getAuthorizationCode();
-        $response->getPaymentTypeCode();
-        $response->getResponseCode();
-        $response->getInstallmentsAmount();
-        $response->getInstallmentsNumber();
-        $response->getBalance();
+        $preOrder_anulacion = Preorder::where('tokenWS', $token)->firstOrFail();
+        $items_in_cart = unserialize($preOrder_anulacion->cart);
+        foreach ($items_in_cart as $item){            
+            $oldCart = Session::has('cart') ? Session::get('cart') : null;
+            $cart = new Cart($oldCart);
+            $product = Product::find($item['item']['id']);
+            $cart->restoreCart($item['item'], $item['item']['id'], $item['qty']);
+            Session::put('cart', $cart);
+        }
+        $preOrder_anulacion->delete();
+    }
+
+    public function CreateWebpayToken($response, $token)
+    {
+        $wpToken = new WebpayToken;
+        $wpToken->buyOrder = $response->getBuyOrder();
+        $wpToken->tokenWs = $token;
+        $wpToken->authorizationCode = $response->getAuthorizationCode() . " TIPODEPAGO " . $response->getPaymentTypeCode();
+        $wpToken->responseCode = $response->getResponseCode();
+        $wpToken->amount = $response->getAmount(). " CUOTAS " . $response->getInstallmentsNumber() . " " .  $response->getInstallmentsAmount();
+        $wpToken->save();  
+    }
+
+    public function CreateOrder($response, $unser_datos, $items_qty_implode, $items_names_implode)
+    {
+        $ordenFinal = new Order;
+        $ordenFinal->buyOrder = $response->getBuyOrder();
+        $ordenFinal->status = $response->getResponseCode();
+        $ordenFinal->items = $items_names_implode; 
+        $ordenFinal->cantidad = $items_qty_implode;
+        $ordenFinal->total = $response->getAmount();
+        $ordenFinal->nombre = $unser_datos['c_nombre'];
+        $ordenFinal->telefono = $unser_datos['c_telefono'];
+        $ordenFinal->email = $unser_datos['c_email'];
+        $ordenFinal->direccion = $unser_datos['c_direccion'];
+        $ordenFinal->region = $unser_datos['c_region'];
+        $ordenFinal->comuna = Comuna::findOrFail($unser_datos['c_comuna'])->name;
+        $ordenFinal->save();  
     }
 }
+
