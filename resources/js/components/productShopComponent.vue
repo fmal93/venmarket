@@ -70,14 +70,15 @@
                         <img :src="'/storage/' + product.img_url" class="w-full" :alt="product.name">
                     </a>
                 </div>
-                <a :href="'product/' + product.slug" class="w-4/5 m-auto block">
+                <a :href="'/product/' + product.slug" class="w-4/5 m-auto block">
                     <p class="w-full text-black hover:text-yellow-400 leading-tight h-20 lg:h-12 tracking-wider">{{ product.name | truncate(50, '...') }}</p>
                 </a>
                 <div href="#" class="w-4/5 m-auto block">
                     <p class="w-4/5 text-black leading-tight font-light">{{ product.brand + ' ' + product.product_value }}</p>
                 </div>
                 <p class="w-full text-center text-black text-xl py-3 tracking-wider">&#36;{{ product.price }}</p>
-                <a :href="'/add-to-cart/' + product.id" class="w-4/5 rounded-md p-1 m-auto block text-center bg-yellow-400 cursor-pointer hover:text-white tracking-wider">Agregar</a>                
+                <a :href="'/add-to-cart/' + product.id" v-if="product.stock > 0" class="w-4/5 rounded-md p-1 m-auto block text-center bg-yellow-400 cursor-pointer hover:text-white tracking-wider">Agregar</a>
+                <p v-else class="w-4/5 rounded-md p-1 m-auto block text-center bg-yellow-400 opacity-50 hover:text-white tracking-wider">Agotado</p>               
             </div>
         </div>
         <ul class="w-full flex justify-center">

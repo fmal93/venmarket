@@ -14,7 +14,7 @@ use App\Models\ProductStock;
 use App\Models\Product;
 use App\Models\WebpayToken;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\orderPlaced;
+use App\Mail\OrderPlaced;
 
 class CheckoutController extends Controller
 {
@@ -52,7 +52,8 @@ class CheckoutController extends Controller
         $buy_order = strval(rand(100000, 999999999));
         $return_url = "http://localhost:8000/checkout-return";
 
-        $response = Transaction::create($buy_order, $session_id, $amount, $return_url);
+        $transaction = new Transaction();
+        $response = $transaction->create($buy_order, $session_id, $amount, $return_url);
 
         $response_url = $response->getUrl();
         $response_token = $response->getToken();
@@ -80,7 +81,7 @@ class CheckoutController extends Controller
             return redirect('/carrito');
         }else{
             $token = $request->token_ws;
-            $response = Transaction::commit($token);
+            $response = (new Transaction)->commit($token);
 
             if ($response->getResponseCode() == 0) {
                 $this->CreateWebpayToken($response, $token); 
@@ -101,11 +102,13 @@ class CheckoutController extends Controller
                 Mail::send(new OrderPlaced($tems_cart, $unser_datos, $response->getBuyOrder()));
                 Mail::to($unser_datos['c_email'])->send(new OrderPlaced($tems_cart, $unser_datos, $response->getBuyOrder()));
                 $preOrder->delete();
+                Session::forget('cart');
                 return view('payment.checkout-return',  ['status' => 'Orden completa', 'response' => $response]);
             }
 
             $this->CreateWebpayToken($response, $token);
-            $this->restoreCart($token);  
+            $preOrder = Preorder::where('tokenWS', $token)->firstOrFail();
+            $preOrder->delete();
             return view('payment.checkout-return')->with('status', 'Ha ocurrido un error');
         }
     }

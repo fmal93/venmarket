@@ -10,14 +10,19 @@
             </div>
         </div>
         <div class="w-full lg:w-1/2">
-            <div class="lg:fixed lg:w-1/2 lg:my-16">
+            <div class="lg:fixed lg:w-1/2 lg:my-8">
                 <div class="w-full lg:w-2/3 px-4">
                     <p class="text-2xl lg:text-4xl font-bold p-4 lg:py-8 tracking-widest">{{ $product->name }}</p>
-                    <p class="text-lg p-4 font-light text-yellow-500 lg:py-8 font-bold tracking-widest">{{ Str::upper($product->brand->name) }} - {{ $product->productValue->detail }}</p>
-                    <p class="text-4xl p-4 lg:py-8 font-bold tracking-widest">${{ $product->productValue->price}}</p>
+                    <p class="text-lg p-4 font-light text-yellow-500 lg:py-4 font-bold tracking-widest">{{ Str::upper($product->brand->name) }} - {{ $product->productValue->detail }}</p>
+                    <p class="text-4xl p-4 lg:py-4 font-bold tracking-widest">${{ $product->productValue->price}}</p>
                 </div>
                 <div class="w-full lg:w-2/6 hover:text-white">
-                    <a href="/add-to-cart/{{ $product->id }}" class="block m-auto text-center p-3 tracking-widest rounded-md shadow-md text-extrabold text-sm w-4/5 bg-yellow-400"><span class="flex p-2 justify-around"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>Agragar al carro</span></a>
+                    @if ( $product->productValue->productStock->stock > 0)
+                        <a href="/add-to-cart/{{ $product->id }}" class="block m-auto text-center p-3 tracking-widest rounded-md shadow-md text-extrabold text-sm w-full bg-yellow-400"><span class="flex p-2 justify-around"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>Agragar al carro</span></a>
+                    @else
+                        <p class="block m-auto text-center p-3 tracking-widest rounded-md shadow-md text-extrabold text-sm w-4/5 bg-yellow-400 opacity-50"><span class="flex p-2 justify-around"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>Agotado</span></a>        
+                    @endif  
+                    
                 </div>
             </div>
         </div>

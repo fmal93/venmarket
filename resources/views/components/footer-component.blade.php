@@ -92,19 +92,19 @@
             </g>
         </svg>
         <div class="w-full pl-3 pr-2 lg:px-6 italic">
-            <p class="font-ligth text-md tracking-wider py-1">Ubicanos en Claudio Arrau #1111 Pudahuel, Region Metropolitana</p>
-            <p class="font-ligth text-md tracking-wider py-1">Nuestro Correo <strong>test@gmail.com</strong></p>
+            <p class="font-ligth text-md tracking-wider py-1">Ubicanos en av claudio arrau 7152 local 4 9060692 Santiago de Chile, Chile</p>
+            <p class="font-ligth text-md tracking-wider py-1">Nuestro Correo <strong>venmarketbodegon@gmail.com</strong></p>
             <p class="font-ligth text-md tracking-wider py-1">Nuestros numeros son: </p>
-            <p class="font-ligth text-md tracking-wider py-1">+56 9 6633 23456</p>
+            <p class="font-ligth text-md tracking-wider py-1">+56 9 4037 3364</p>
         </div>
     </div>
     <div class="flex justify-center w-full lg:w-1/3 order-2 lg:order-3 py-4 flex-wrap border-b-2 border-gray-300 lg:border-0">            
-        <a href="https://www.facebook.com/asovetcl-110755194040420/" class="w-1/4 flex justify-center m-auto">
+        <a href="https://www.facebook.com/pages/category/Shopping---Retail/Venmarket-bodegon-101301755089009/" class="w-1/4 flex justify-center m-auto">
             <svg width="3.5rem" height="3.5rem" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 455.73 455.73" style="enable-background:new 0 0 455.73 455.73;" xml:space="preserve">
                 <path style="fill:#3A559F;" d="M0,0v455.73h242.704V279.691h-59.33v-71.864h59.33v-60.353c0-43.893,35.582-79.475,79.475-79.475 h62.025v64.622h-44.382c-13.947,0-25.254,11.307-25.254,25.254v49.953h68.521l-9.47,71.864h-59.051V455.73H455.73V0H0z"/>
             </svg>
         </a>
-        <a href="https://www.instagram.com/asovet.cl/?hl=es-la" class="w-1/4 flex justify-center m-auto">
+        <a href="https://www.instagram.com/venmarketbodegon/" class="w-1/4 flex justify-center m-auto">
             <svg width="3.5rem" height="3.5rem" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 551.034 551.034" style="enable-background:new 0 0 551.034 551.034;" xml:space="preserve">	
                 <linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="275.517" y1="4.57" x2="275.517" y2="549.72" gradientTransform="matrix(1 0 0 -1 0 554)">
                     <stop  offset="0" style="stop-color:#E09B3D"/>
@@ -132,7 +132,7 @@
                 <circle style="fill:url(#SVGID_3_);" cx="418.31" cy="134.07" r="34.15"/>
             </svg>
         </a>
-        <a href="https://wa.me/56955277677" class="w-1/4 flex justify-center m-auto">
+        <a href="https://wa.me/56940373364" class="w-1/4 flex justify-center m-auto">
             <svg width="3.5rem" height="3.5rem" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 455.731 455.731" style="enable-background:new 0 0 455.731 455.731;" xml:space="preserve">
                 <rect x="0" y="0" style="fill:#1BD741;" width="455.731" height="455.731"/>
                 <path style="fill:#FFFFFF;" d="M68.494,387.41l22.323-79.284c-14.355-24.387-21.913-52.134-21.913-80.638

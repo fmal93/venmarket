@@ -8,19 +8,19 @@
     <div class="swiper-container swiper-1">
         <div class="swiper-wrapper">
             <div class="swiper-slide">
-                <img src="storage/various-pantry-products-copy-space.jpg">
+                <img src="storage/banner-1.jpg">
             </div>
             <div class="swiper-slide">
-                <img src="storage/front-view-pantry-food-ingredients.jpg">
+                <img src="storage/banner-2.jpg">
             </div>
             <div class="swiper-slide">
-                <img src="storage/milk-products-on-white-table-with-copyspace.jpg">
+                <img src="storage/banner-3.jpg">
             </div>
             <div class="swiper-slide">
-                <img src="storage/delicious-pieces-of-cheese.jpg">
+                <img src="storage/banner-4.jpg">
             </div>
             <div class="swiper-slide">
-                <img src="storage/different-vegetables-in-textile-bag-on-beige.jpg">
+                <img src="storage/banner-5.jpg">
             </div>
         </div>
         <!-- Add Arrows -->
@@ -85,7 +85,11 @@
                                     <p class="pl-6 h-10 lg:h-auto w-full text-left italic font-bold text-sm">{{ Str::limit($recomendation->name, 20, '...') }}</p>
                                     <p class="pl-6 w-full text-left italic font-light text-sm">{{ $recomendation->brand->name }}  {{ $recomendation->productValue->detail }}</p>
                                     <p class="pl-6 w-full text-left italic font-bold text-sm">${{ $recomendation->productValue->price }} 1 UND</p>
-                                    <a href="/add-to-cart/{{ $recomendation->id }}" class="w-3/5 rounded-md m-auto block text-center bg-yellow-400 cursor-pointer hover:text-white tracking-wider text-sm p-1 mt-4 mb-2">Agregar</a>    
+                                    @if ( $recomendation->productValue->productStock->stock > 0)
+                                        <a href="/add-to-cart/{{ $recomendation->id }}" class="w-3/5 rounded-md m-auto block text-center bg-yellow-400 cursor-pointer hover:text-white tracking-wider text-sm p-1 mt-4 mb-2">Agregar</a>
+                                    @else
+                                        <p class="w-3/5 rounded-md m-auto block text-center bg-yellow-400 opacity-50 hover:text-white tracking-wider text-sm p-1 mt-4 mb-2">Agotado</p>         
+                                    @endif    
                                 </div>
                             </div>
                         @endforeach
@@ -147,7 +151,11 @@
                                         <p class="pl-6 h-10 lg:h-auto w-full text-left italic font-bold text-sm">{{ Str::limit($item->name, 20, '...') }}</p>
                                         <p class="pl-6 w-full text-left italic font-light text-sm">{{ $item->brand->name }}  {{ $item->productValue->detail }}</p>
                                         <p class="pl-6 w-full text-left italic font-bold text-sm">${{ $item->productValue->price }}  UND</p>
-                                        <a href="/add-to-cart/{{ $item->id }}" class="w-3/5 rounded-md m-auto block text-center bg-yellow-400 cursor-pointer hover:text-white tracking-wider text-sm p-1 mt-4 mb-2">Agregar</a>    
+                                        @if ( $item->productValue->productStock->stock > 0)
+                                            <a href="/add-to-cart/{{ $item->id }}" class="w-3/5 rounded-md m-auto block text-center bg-yellow-400 cursor-pointer hover:text-white tracking-wider text-sm p-1 mt-4 mb-2">Agregar</a>
+                                        @else
+                                            <p class="w-3/5 rounded-md m-auto block text-center bg-yellow-400 opacity-50 hover:text-white tracking-wider text-sm p-1 mt-4 mb-2">Agotado</p>         
+                                        @endif    
                                     </div>
                                 </div>
                                 @if ($loop->index  == 12)
@@ -214,7 +222,11 @@
                                     <p class="pl-6 h-10 lg:h-auto w-full text-left italic font-bold text-sm">{{ Str::limit($item->name, 20, '...') }}</p>
                                     <p class="pl-6 w-full text-left italic font-light text-sm">{{ $item->brand->name }}  {{ $item->productValue->detail }}</p>
                                     <p class="pl-6 w-full text-left italic font-bold text-sm">${{ $item->productValue->price }}  UND</p>
-                                    <a href="/add-to-cart/{{ $item->id }}" class="w-3/5 rounded-md m-auto block text-center bg-yellow-400 cursor-pointer hover:text-white tracking-wider text-sm p-1 mt-4 mb-2">Agregar</a>    
+                                    @if ( $item->productValue->productStock->stock > 0)
+                                        <a href="/add-to-cart/{{ $item->id }}" class="w-3/5 rounded-md m-auto block text-center bg-yellow-400 cursor-pointer hover:text-white tracking-wider text-sm p-1 mt-4 mb-2">Agregar</a>
+                                    @else
+                                        <p class="w-3/5 rounded-md m-auto block text-center bg-yellow-400 opacity-50 hover:text-white tracking-wider text-sm p-1 mt-4 mb-2">Agotado</p>         
+                                    @endif
                                 </div>
                             </div>
                             @if ($loop->index  == 12)
@@ -281,7 +293,11 @@
                                         <p class="pl-6 h-10 lg:h-auto w-full text-left italic font-bold text-sm">{{ Str::limit($item->name, 20, '...') }}</p>
                                         <p class="pl-6 w-full text-left italic font-light text-sm">{{ $item->brand->name }}  {{ $item->productValue->detail }}</p>
                                         <p class="pl-6 w-full text-left italic font-bold text-sm">${{ $item->productValue->price }}  UND</p>
-                                        <a href="/add-to-cart/{{ $item->id }}" class="w-3/5 rounded-md m-auto block text-center bg-yellow-400 cursor-pointer hover:text-white tracking-wider text-sm p-1 mt-4 mb-2">Agregar</a>    
+                                        @if ( $item->productValue->productStock->stock > 0)
+                                            <a href="/add-to-cart/{{ $item->id }}" class="w-3/5 rounded-md m-auto block text-center bg-yellow-400 cursor-pointer hover:text-white tracking-wider text-sm p-1 mt-4 mb-2">Agregar</a>
+                                        @else
+                                            <p class="w-3/5 rounded-md m-auto block text-center bg-yellow-400 opacity-50 hover:text-white tracking-wider text-sm p-1 mt-4 mb-2">Agotado</p>         
+                                        @endif    
                                     </div>
                                 </div>
                                 @if ($loop->index  == 12)

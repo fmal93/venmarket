@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d36e377409a3ee958960501953f416b8",
+    "content-hash": "f29d3f4405a742c3919935933a8bdc66",
     "packages": [
         {
             "name": "arrilot/laravel-widgets",
@@ -6104,30 +6104,28 @@
         },
         {
             "name": "transbank/transbank-sdk",
-            "version": "1.10.0",
+            "version": "2.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/TransbankDevelopers/transbank-sdk-php.git",
-                "reference": "05b743c2878eef7f7dfd9f68f06076052d01cc5d"
+                "reference": "a8e9df89feb2e63e391062bfb4a16123d75d82e3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/TransbankDevelopers/transbank-sdk-php/zipball/05b743c2878eef7f7dfd9f68f06076052d01cc5d",
-                "reference": "05b743c2878eef7f7dfd9f68f06076052d01cc5d",
+                "url": "https://api.github.com/repos/TransbankDevelopers/transbank-sdk-php/zipball/a8e9df89feb2e63e391062bfb4a16123d75d82e3",
+                "reference": "a8e9df89feb2e63e391062bfb4a16123d75d82e3",
                 "shasum": ""
             },
             "require": {
                 "ext-curl": "*",
                 "ext-json": "*",
                 "ext-mbstring": "*",
-                "ext-openssl": "*",
-                "ext-soap": "*",
                 "guzzlehttp/guzzle": "^5|^6|^7",
-                "php": ">=5.6.0"
+                "php": ">=7.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "~4.0",
-                "satooshi/php-coveralls": "~0.6.1",
+                "dms/phpunit-arraysubset-asserts": "^0.2.1",
+                "phpunit/phpunit": "^9",
                 "squizlabs/php_codesniffer": "~2.0"
             },
             "type": "library",
@@ -6151,9 +6149,9 @@
             ],
             "support": {
                 "issues": "https://github.com/TransbankDevelopers/transbank-sdk-php/issues",
-                "source": "https://github.com/TransbankDevelopers/transbank-sdk-php/tree/1.10.0"
+                "source": "https://github.com/TransbankDevelopers/transbank-sdk-php/tree/2.0.2"
             },
-            "time": "2020-12-10T15:15:31+00:00"
+            "time": "2021-04-26T23:07:48+00:00"
         },
         {
             "name": "vlucas/phpdotenv",

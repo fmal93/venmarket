@@ -30,6 +30,7 @@ Route::group(['prefix' => 'admin'], function () {
 
 Route::post('/checkout', [CheckoutController::class, 'initTransaction']);
 Route::get('/checkout-form', [CheckoutController::class, 'getCheckoutForm']);
+Route::get('/checkout-return', [CheckoutController::class, 'confirmTransaction']);
 Route::post('/checkout-return', [CheckoutController::class, 'confirmTransaction']);
 
 Route::get('/carrito', [CartController::class, 'index']);
